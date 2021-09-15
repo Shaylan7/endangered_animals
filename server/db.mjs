@@ -4,9 +4,15 @@ import pgp from "pg-promise";
 const db = initDb();
 
 export const getTasks = () => db.any("SELECT * FROM tasks");
+// getSightings = SELECT * FROM sightings JOIN on animals (depending on what we need from the other table)
+export const getSightings = () => db.any("SELECT * FROM sightings");
 
 export const addTask = (name) =>
   db.one("INSERT INTO tasks(name) VALUES(${name}) RETURNING *", { name });
+  // reportSightings = INSERT INTO 
+
+export const addSighting = (individual_id) =>
+db.one("INSERT INTO sightings(name) VALUES(${name}) RETURNING *", { individual_id }); 
 
 function initDb() {
   let connection;
