@@ -2,18 +2,19 @@ import * as React from "react";
 
 import { Routes, Route, Link } from "react-router-dom";
 
+import Individuals from "./Individuals";
 import Sightings from "./Sightings";
 import Tasks from "./Tasks";
 
 const App = () => (
   <main>
     <nav>
-      <Link to="/">Home</Link> | <Link to="dashboard">Dashboard</Link> |{" "}
+      <Link to="/">Home</Link> | <Link to="individuals">Individuals</Link> |{" "}
       <Link to="sightings">More</Link>
     </nav>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/individuals" element={<Individualss />} />
       <Route path="/sightings" element={<More />} />
     </Routes>
   </main>
@@ -33,9 +34,10 @@ const Home = () => (
   </>
 );
 
-const Dashboard = () => (
+const Individualss = () => (
   <>
-    <h1>Dashboard</h1>
+    <h1>Animals We are Tracking</h1>
+    <Individuals />
   </>
 );
 

@@ -21,6 +21,18 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: individuals; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.individuals (
+    id integer NOT NULL,
+    nickname character varying,
+    species character varying,
+    create_date date
+);
+
+
+--
 -- Name: sightings; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -72,11 +84,24 @@ ALTER TABLE ONLY public.tasks ALTER COLUMN id SET DEFAULT nextval('public.tasks_
 
 
 --
+-- Data for Name: individuals; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.individuals (id, nickname, species, create_date) FROM stdin;
+567	Polly	Western Gorilla	2008-12-09
+\.
+
+
+--
 -- Data for Name: sightings; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.sightings (id, individual_id, date_seen, location_seen, healthy, sighter_email) FROM stdin;
 1	555	2021-08-16	malemba nkulu	t	gorillafan@gmail.com
+588	\N	\N	\N	\N	\N
+234	\N	\N	\N	\N	\N
+9	\N	\N	\N	\N	\N
+4	\N	\N	\N	\N	\N
 \.
 
 
@@ -91,6 +116,7 @@ COPY public.tasks (id, name) FROM stdin;
 4	Advocate for living wage
 5	Provide universal health care
 1	hello
+2	walking dog
 \.
 
 
@@ -98,7 +124,15 @@ COPY public.tasks (id, name) FROM stdin;
 -- Name: tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.tasks_id_seq', 1, true);
+SELECT pg_catalog.setval('public.tasks_id_seq', 2, true);
+
+
+--
+-- Name: individuals individuals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.individuals
+    ADD CONSTRAINT individuals_pkey PRIMARY KEY (id);
 
 
 --

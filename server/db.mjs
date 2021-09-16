@@ -7,12 +7,14 @@ export const getTasks = () => db.any("SELECT * FROM tasks");
 // getSightings = SELECT * FROM sightings JOIN on animals (depending on what we need from the other table)
 export const getSightings = () => db.any("SELECT * FROM sightings");
 
+export const getIndividuals = () => db.any("SELECT * FROM individuals");
+
 export const addTask = (name) =>
   db.one("INSERT INTO tasks(name) VALUES(${name}) RETURNING *", { name });
   // reportSightings = INSERT INTO 
 
-export const addSighting = (id) =>
-db.one("INSERT INTO sightings(id) VALUES(${id}) RETURNING *", { id }); 
+export const addSighting = (id, individual_id, date_seen) =>
+db.one("INSERT INTO sightings(id, individual_id, date_seen) VALUES(${id}, ${individual_id}, ${date_seen}) RETURNING *", { id, individual_id, date_seen }, ); 
 
 function initDb() {
   let connection;

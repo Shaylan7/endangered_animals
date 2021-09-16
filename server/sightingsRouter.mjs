@@ -11,7 +11,8 @@ sightingsRouter.get("/", async (request, response) => {
 
 sightingsRouter.use(express.json());
 sightingsRouter.post("/", async (request, response) => {
-  const sighting = await db.addSighting(request.body.id);
+  console.log('viz', request.body)
+  const sighting = await db.addSighting(request.body.id, request.body.individual_id, request.body.date_seen);
   response.status(201).json(sighting);
 });
 

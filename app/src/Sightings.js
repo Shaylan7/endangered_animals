@@ -11,8 +11,8 @@ const Sightings = () => {
     loadSightings();
   }, []);
 
-  const addSighting = (sighting) =>
-    apiClient.addSighting(sighting).then(loadSightings);
+  const addSighting = (id, individual_id, date_seen) =>
+    apiClient.addSighting(id, individual_id, date_seen).then(loadSightings);
 
   return (
     <section>
@@ -48,7 +48,8 @@ const SightingList = ({ sightings }) => (
 
 const AddSighting = ({ addSighting }) => {
   const [id, setID] = React.useState("");
-  // const [individual_id, setIndividualId] = React.useState("");
+  const [individual_id, setIndividualId] = React.useState("");
+  const [date_seen, setDateSeen] = React.useState("");
   // const [location_seen, setLocationSeen] = React.useState("");
   const [sighting, setSighting] = React.useState("");
 
@@ -57,7 +58,10 @@ const AddSighting = ({ addSighting }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (canAdd) {
-      addSighting(id);
+      setID(id);
+      setIndividualId(individual_id);
+      setDateSeen(date_seen);
+      addSighting(id, individual_id, date_seen);
       setSighting("");
     }
   };
@@ -72,14 +76,22 @@ const AddSighting = ({ addSighting }) => {
           value={id}
         />
       </label>
-      {/* <label>
+      <label>
         Individual ID:{" "}
         <input
           type="integer"
           onChange={(e) => setIndividualId(e.currentTarget.value)}
           value={individual_id}
         />
-      </label> */}
+      </label>
+      <label>
+        Date:{" "}
+        <input
+          type="date"
+          onChange={(e) => setDateSeen(e.currentTarget.value)}
+          value={date_seen}
+        />
+      </label>
       <button disabled={!canAdd}>Add</button>
     </form>
   );
