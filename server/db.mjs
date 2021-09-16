@@ -11,8 +11,8 @@ export const addTask = (name) =>
   db.one("INSERT INTO tasks(name) VALUES(${name}) RETURNING *", { name });
   // reportSightings = INSERT INTO 
 
-export const addSighting = (individual_id) =>
-db.one("INSERT INTO sightings(name) VALUES(${name}) RETURNING *", { individual_id }); 
+export const addSighting = (id) =>
+db.one("INSERT INTO sightings(id) VALUES(${id}) RETURNING *", { id }); 
 
 function initDb() {
   let connection;

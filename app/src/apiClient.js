@@ -4,10 +4,10 @@ export const addTask = (name) => _post("/api/tasks", { name });
 
 export const getSightings = () => _get("/api/sightings");
 
-export const addSighting = (individual_id) =>
-  _post("/api/sightings", { individual_id });
+export const addSighting = (id) => _post("/api/sightings", { id });
 
 const _get = async (url) => (await fetch(url)).json();
+//_get a way to use get over and over for different endpoints
 
 const _post = async (url, body) => {
   const response = await fetch(url, {
