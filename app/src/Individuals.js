@@ -1,5 +1,8 @@
 import * as React from "react";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Card } from "react-bootstrap";
+
 import * as apiClient from "./apiClient";
 
 const Individuals = () => {
@@ -23,13 +26,16 @@ const Individuals = () => {
 };
 
 const IndividualList = ({ individuals }) => (
-  <ul>
-    {individuals.map(({ id, nickname, species }) => (
-      <li key={id}>
-        {nickname} {species}
-      </li>
+  <div>
+    {individuals.map(({ id, nickname, species, image_url }) => (
+      <Card style={{ width: "18rem" }}>
+        <Card.Img variant="top" src={image_url} />
+        <Card.Body>
+          {nickname} {species}
+        </Card.Body>
+      </Card>
     ))}
-  </ul>
+  </div>
 );
 
 // const [name, setName] = useState('');

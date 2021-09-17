@@ -4,8 +4,8 @@ export const addTask = (name) => _post("/api/tasks", { name });
 
 export const getSightings = () => _get("/api/sightings");
 
-export const addSighting = (id, individual_id, date_seen) =>
-  _post("/api/sightings", { id, individual_id, date_seen });
+export const addSighting = (id, individual_id, date_seen, location_seen) =>
+  _post("/api/sightings", { id, individual_id, date_seen, location_seen });
 
 export const getIndividuals = () => _get("/api/individuals");
 

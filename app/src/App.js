@@ -22,6 +22,7 @@ const App = () => (
 const More = () => (
   <>
     <h1>Sightings</h1>
+
     <Sightings />
   </>
 );
@@ -36,7 +37,7 @@ const Home = () => (
 
 const Individualss = () => (
   <>
-    <h1>Animals We are Tracking</h1>
+    <h1>Meet our Family</h1>
     <Individuals />
   </>
 );

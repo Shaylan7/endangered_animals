@@ -28,7 +28,8 @@ CREATE TABLE public.individuals (
     id integer NOT NULL,
     nickname character varying,
     species character varying,
-    create_date date
+    create_date date,
+    image_url character varying
 );
 
 
@@ -37,13 +38,33 @@ CREATE TABLE public.individuals (
 --
 
 CREATE TABLE public.sightings (
-    id integer NOT NULL,
     individual_id integer,
     date_seen date,
     location_seen character varying,
     healthy boolean,
-    sighter_email character varying
+    sighter_email character varying,
+    id integer NOT NULL
 );
+
+
+--
+-- Name: sightings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sightings_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sightings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sightings_id_seq OWNED BY public.sightings.id;
 
 
 --
@@ -77,6 +98,13 @@ ALTER SEQUENCE public.tasks_id_seq OWNED BY public.tasks.id;
 
 
 --
+-- Name: sightings id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sightings ALTER COLUMN id SET DEFAULT nextval('public.sightings_id_seq'::regclass);
+
+
+--
 -- Name: tasks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -87,8 +115,9 @@ ALTER TABLE ONLY public.tasks ALTER COLUMN id SET DEFAULT nextval('public.tasks_
 -- Data for Name: individuals; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.individuals (id, nickname, species, create_date) FROM stdin;
-567	Polly	Western Gorilla	2008-12-09
+COPY public.individuals (id, nickname, species, create_date, image_url) FROM stdin;
+567	Polly	Western Gorilla	2008-12-09	https://files.worldwildlife.org/wwfcmsprod/images/Mountain_Gorilla_Silverback_WW22557/hero_full/cg47pknak_Mountain_Gorilla_Silverback_WW22557.jpg
+568	Lemon	Bornean	2008-07-10	https://files.worldwildlife.org/wwfcmsprod/images/LG_Orangutans_Hero_image__c__naturepl.com_Anup_Shah_WWF.jpg/hero_full/5s1j750d7c_LG_Orangutans_Hero_image__c__naturepl.com_Anup_Shah_WWF.jpg
 \.
 
 
@@ -96,12 +125,10 @@ COPY public.individuals (id, nickname, species, create_date) FROM stdin;
 -- Data for Name: sightings; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.sightings (id, individual_id, date_seen, location_seen, healthy, sighter_email) FROM stdin;
-1	555	2021-08-16	malemba nkulu	t	gorillafan@gmail.com
-588	\N	\N	\N	\N	\N
-234	\N	\N	\N	\N	\N
-9	\N	\N	\N	\N	\N
-4	\N	\N	\N	\N	\N
+COPY public.sightings (individual_id, date_seen, location_seen, healthy, sighter_email, id) FROM stdin;
+555	2021-08-20	Congo Basin Forest	t	gorillafan@gmail.com	10
+567	2020-10-21	Congo Basin Forest	t	gorillafan@gmail.com	11
+678	2020-03-12	Sumatra	f	iloveanimals@gmail.com	12
 \.
 
 
@@ -117,14 +144,22 @@ COPY public.tasks (id, name) FROM stdin;
 5	Provide universal health care
 1	hello
 2	walking dog
+3	feed the cat 
 \.
+
+
+--
+-- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.sightings_id_seq', 12, true);
 
 
 --
 -- Name: tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.tasks_id_seq', 2, true);
+SELECT pg_catalog.setval('public.tasks_id_seq', 3, true);
 
 
 --

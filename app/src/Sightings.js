@@ -1,6 +1,13 @@
 import * as React from "react";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Card, CardColumns } from "react-bootstrap";
+import Row from "react-bootstrap/Card";
+import Col from "react-bootstrap/Card";
+import CardGroup from "react-bootstrap/Card";
+
 import * as apiClient from "./apiClient";
+import background from "./zoombackground.jpeg";
 
 const Sightings = () => {
   const [sightings, setSightings] = React.useState([]);
@@ -17,17 +24,28 @@ const Sightings = () => {
   return (
     <section>
       <SightingList sightings={sightings} />
+
       <AddSighting {...{ addSighting }} />
     </section>
   );
 };
 
 const SightingList = ({ sightings }) => (
-  <ul>
-    {sightings.map(({ id, location_seen }) => (
-      <li key={id}>{location_seen}</li>
+  <div>
+    {sightings.map(({ id, location_seen, nickname, image_url }) => (
+      <span>
+        <CardColumns>
+          <Card style={{ width: "18rem" }}>
+            <Card.Img variant="top" src={image_url} />
+            <Card.Body>
+              <Card.Title>{nickname}</Card.Title>
+              {location_seen}
+            </Card.Body>
+          </Card>
+        </CardColumns>
+      </span>
     ))}
-  </ul>
+  </div>
 );
 
 // const [name, setName] = useState('');
@@ -47,35 +65,27 @@ const SightingList = ({ sightings }) => (
 // };
 
 const AddSighting = ({ addSighting }) => {
-  const [id, setID] = React.useState("");
   const [individual_id, setIndividualId] = React.useState("");
   const [date_seen, setDateSeen] = React.useState("");
+  const [location_seen, setLocationSeen] = React.useState("");
   // const [location_seen, setLocationSeen] = React.useState("");
   const [sighting, setSighting] = React.useState("");
 
-  const canAdd = id !== "";
+  const canAdd = individual_id !== "";
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (canAdd) {
-      setID(id);
       setIndividualId(individual_id);
       setDateSeen(date_seen);
-      addSighting(id, individual_id, date_seen);
+      setLocationSeen(location_seen);
+      addSighting(individual_id, date_seen, location_seen);
       setSighting("");
     }
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <label>
-        ID:{" "}
-        <input
-          type="integer"
-          onChange={(e) => setID(e.currentTarget.value)}
-          value={id}
-        />
-      </label>
       <label>
         Individual ID:{" "}
         <input
@@ -90,6 +100,14 @@ const AddSighting = ({ addSighting }) => {
           type="date"
           onChange={(e) => setDateSeen(e.currentTarget.value)}
           value={date_seen}
+        />
+      </label>
+      <label>
+        Location:{" "}
+        <input
+          type="text"
+          onChange={(e) => setLocationSeen(e.currentTarget.value)}
+          value={location_seen}
         />
       </label>
       <button disabled={!canAdd}>Add</button>
