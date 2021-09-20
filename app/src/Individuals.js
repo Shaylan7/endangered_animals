@@ -2,6 +2,7 @@ import * as React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card } from "react-bootstrap";
+import Badge from "react-bootstrap/Badge";
 
 import * as apiClient from "./apiClient";
 
@@ -27,14 +28,20 @@ const Individuals = () => {
 
 const IndividualList = ({ individuals }) => (
   <div>
-    {individuals.map(({ id, nickname, species, image_url }) => (
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={image_url} />
-        <Card.Body>
-          {nickname} {species}
-        </Card.Body>
-      </Card>
-    ))}
+    {individuals.map(
+      ({ id, nickname, species, image_url, conservation_status_code }) => (
+        <Card style={{ width: "18rem" }}>
+          <Card.Img variant="top" src={image_url} />
+          <Card.Title>{nickname}</Card.Title>
+          <Card.Body>
+            {species}
+            <p>
+              Status: <Badge bg="secondary">{conservation_status_code}</Badge>
+            </p>
+          </Card.Body>
+        </Card>
+      ),
+    )}
   </div>
 );
 

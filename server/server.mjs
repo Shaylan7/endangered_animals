@@ -4,6 +4,7 @@ import mime from "mime-types";
 import individualsRouter from "./individualsRouter.mjs";
 import sightingsRouter from "./sightingsRouter.mjs"; 
 import taskRouter from "./taskRouter.mjs";
+import speciesRouter from "./speciesRouter.mjs";
 
 const app = express();
 
@@ -13,9 +14,12 @@ app.use("/api/sightings", sightingsRouter);
 
 app.use("/api/individuals", individualsRouter);
 
+app.use("/api/species", speciesRouter); 
+
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),
 );
+
 
 if (process.env?.SERVE_REACT?.toLowerCase() === "true") {
   app.use(

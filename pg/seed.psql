@@ -68,6 +68,20 @@ ALTER SEQUENCE public.sightings_id_seq OWNED BY public.sightings.id;
 
 
 --
+-- Name: species; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.species (
+    id integer NOT NULL,
+    common_name character varying,
+    scientific_name character varying,
+    number_living integer,
+    conservation_status_code character varying,
+    create_date date
+);
+
+
+--
 -- Name: tasks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -75,7 +89,6 @@ CREATE TABLE public.tasks (
     id integer NOT NULL,
     name text
 );
-
 
 --
 -- Name: tasks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
@@ -89,6 +102,8 @@ CREATE SEQUENCE public.tasks_id_seq
     NO MAXVALUE
     CACHE 1;
 
+INSERT INTO individuals (id, nickname, species, create_date, image_url)
+VALUES (904, 'Fritz', 'Amur Leopard', '2014-10-05', 'https://files.worldwildlife.org/wwfcmsprod/images/Amur_Leopard_/hero_full/721j48l2l3_amur_leopard_99144569.jpg')
 
 --
 -- Name: tasks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
@@ -118,6 +133,9 @@ ALTER TABLE ONLY public.tasks ALTER COLUMN id SET DEFAULT nextval('public.tasks_
 COPY public.individuals (id, nickname, species, create_date, image_url) FROM stdin;
 567	Polly	Western Gorilla	2008-12-09	https://files.worldwildlife.org/wwfcmsprod/images/Mountain_Gorilla_Silverback_WW22557/hero_full/cg47pknak_Mountain_Gorilla_Silverback_WW22557.jpg
 568	Lemon	Bornean	2008-07-10	https://files.worldwildlife.org/wwfcmsprod/images/LG_Orangutans_Hero_image__c__naturepl.com_Anup_Shah_WWF.jpg/hero_full/5s1j750d7c_LG_Orangutans_Hero_image__c__naturepl.com_Anup_Shah_WWF.jpg
+555	Willow	Eastern Gorilla	2010-12-03	https://storage.googleapis.com/afs-prod/media/aba89baa882d4861a6cf56a95b74c801/800.jpeg
+678	Ruby	Rhinoceros unicornis	2012-03-15	https://files.worldwildlife.org/wwfcmsprod/images/Sumatran_Rhino/hero_full/5xhuxqht3c_Photo_3_Sumatran_rhino_4__c__Bill_Konstant_International_Rhino_Foundation.jpg
+237	Rocco	Giant Panda	2004-10-10	https://files.worldwildlife.org/wwfcmsprod/images/Panda_in_Tree/hero_full/2wgwt9z093_Large_WW170579.jpg
 \.
 
 
@@ -129,6 +147,18 @@ COPY public.sightings (individual_id, date_seen, location_seen, healthy, sighter
 555	2021-08-20	Congo Basin Forest	t	gorillafan@gmail.com	10
 567	2020-10-21	Congo Basin Forest	t	gorillafan@gmail.com	11
 678	2020-03-12	Sumatra	f	iloveanimals@gmail.com	12
+568	2021-09-20	Sumatra	f	stephanie@gmail.com	13
+\.
+
+
+--
+-- Data for Name: species; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.species (id, common_name, scientific_name, number_living, conservation_status_code, create_date) FROM stdin;
+5789	Western Gorilla	Gorilla	900	CE	1990-12-11
+5790	Orangutan	Pongo pygmaeus	50000	CE	1994-09-11
+8890	Giant Panda	Ailuropoda melanoleuca	1886	VU	1997-09-06
 \.
 
 
@@ -152,7 +182,7 @@ COPY public.tasks (id, name) FROM stdin;
 -- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sightings_id_seq', 12, true);
+SELECT pg_catalog.setval('public.sightings_id_seq', 13, true);
 
 
 --
@@ -176,6 +206,14 @@ ALTER TABLE ONLY public.individuals
 
 ALTER TABLE ONLY public.sightings
     ADD CONSTRAINT sightings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: species species_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.species
+    ADD CONSTRAINT species_pkey PRIMARY KEY (id);
 
 
 --

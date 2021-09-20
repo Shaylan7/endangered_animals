@@ -5,9 +5,10 @@ const db = initDb();
 
 export const getTasks = () => db.any("SELECT * FROM tasks");
 // getSightings = SELECT * FROM sightings JOIN on animals (depending on what we need from the other table)
-export const getSightings = () => db.any("SELECT * FROM sightings LEFT JOIN individuals on individuals.id = sightings.individual_id");
+export const getSightings = () => db.any("SELECT individual_id, nickname, location_seen, date_seen::VARCHAR, image_url FROM sightings LEFT JOIN individuals on individuals.id = sightings.individual_id ORDER BY date_seen desc");
 
-export const getIndividuals = () => db.any("SELECT * FROM individuals");
+export const getIndividuals = () => db.any("SELECT * FROM individuals LEFT JOIN species on species.common_name = individuals.species");
+export const getSpecies = () => db.any("SELECT * FROM species"); 
 
 export const addTask = (name) =>
   db.one("INSERT INTO tasks(name) VALUES(${name}) RETURNING *", { name });
